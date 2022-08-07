@@ -1,8 +1,8 @@
 @file:Suppress("SpellCheckingInspection")
 
-package me.trev.pigs.commands
+package me.trev.kotlinplugin.commands
 
-import me.trev.pigs.Pig
+import me.trev.kotlinplugin.KotlinPlugin
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
@@ -118,7 +118,7 @@ object PigCommand : CommandExecutor {
                     Bukkit.getScheduler().runTaskTimer(plugin, z, 0, 0)
                     Bukkit.getScheduler().runTaskTimer(plugin, rotation, 0, 0)
                     Bukkit.getScheduler().runTaskTimer(plugin, explosion, 0, 0)
-                    Pig.instance?.logger?.info("scheduled the pigs")
+                    KotlinPlugin.instance?.logger?.info("scheduled the pigs")
 
                     sender.server.say("enabled")
                 }

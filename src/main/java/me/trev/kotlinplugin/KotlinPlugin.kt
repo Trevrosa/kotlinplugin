@@ -1,19 +1,19 @@
 @file:Suppress("SpellCheckingInspection")
 
-package me.trev.pigs
+package me.trev.kotlinplugin
 
-import me.trev.pigs.commands.PigCommand
+import me.trev.kotlinplugin.commands.PigCommand
 import org.bukkit.plugin.java.JavaPlugin
 
 @Suppress("unused")
-class Pig : JavaPlugin() {
+class KotlinPlugin : JavaPlugin() {
     companion object {
-        var instance: Pig? = null
+        var instance: KotlinPlugin? = null
             private set
     }
 
     override fun onEnable() {
-        logger.info("registar the command...")
+        logger.info("registar the commands...")
         getCommand("pig")?.setExecutor(PigCommand)
         instance = this
         logger.info("finishd")

@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.trev</groupId>
-    <artifactId>pig</artifactId>
-    <version>1.0</version>
+    <artifactId>kotlinplugin</artifactId>
+    <version>6.9</version>
     <packaging>jar</packaging>
 
     <name>Pigs</name>

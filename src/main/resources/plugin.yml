@@ -1,10 +1,10 @@
-name: Pig
+name: KotlinPlugin
 version: '${project.version}'
-main: me.trev.pigs.Pig
+main: me.trev.kotlinplugin.KotlinPlugin
 api-version: 1.19
 authors: [ trev ]
-description: Pig
+description: plugin written in kotlin
 commands:
   pig:
-    description: pig
+    description: makes pigs go towards players and explode when they are near
     usage: /<command>
