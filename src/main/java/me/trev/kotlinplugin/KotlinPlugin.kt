@@ -3,6 +3,8 @@
 package me.trev.kotlinplugin
 
 import me.trev.kotlinplugin.commands.PigCommand
+import me.trev.kotlinplugin.listeners.EntityListener
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
 @Suppress("unused")
@@ -13,6 +15,8 @@ class KotlinPlugin : JavaPlugin() {
     }
 
     override fun onEnable() {
+        logger.info("registar the listeners...")
+        Bukkit.getPluginManager().registerEvents(EntityListener, this)
         logger.info("registar the commands...")
         getCommand("pig")?.setExecutor(PigCommand)
         instance = this

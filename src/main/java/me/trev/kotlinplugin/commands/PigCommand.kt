@@ -15,7 +15,6 @@ import org.bukkit.entity.Player
 import org.bukkit.entity.TNTPrimed
 
 object PigCommand : CommandExecutor {
-    @Suppress("unused")
     private fun Server.say(text: String, color: TextColor = TextColor.color(255, 255, 255)) {
         val component = Component.text(text).color(color)
         this.sendMessage(component)
@@ -33,17 +32,16 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        for (player in players) {
-                            if (player.location.x > pig.location.x) {
-                                val location = pig.location
-                                location.x += speed
-                                pig.teleport(location)
-                            }
-                            else {
-                                val location = pig.location
-                                location.x -= speed
-                                pig.teleport(location)
-                            }
+                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
+                        if (player.location.x > pig.location.x) {
+                            val location = pig.location
+                            location.x += speed
+                            pig.teleport(location)
+                        }
+                        else {
+                            val location = pig.location
+                            location.x -= speed
+                            pig.teleport(location)
                         }
                     }
                 }
@@ -52,17 +50,16 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        for (player in players) {
-                            if (player.location.y > pig.location.y) {
-                                val location = pig.location
-                                location.y += speed
-                                pig.teleport(location)
-                            }
-                            else {
-                                val location = pig.location
-                                location.y -= speed
-                                pig.teleport(location)
-                            }
+                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
+                        if (player.location.y > pig.location.y) {
+                            val location = pig.location
+                            location.y += speed
+                            pig.teleport(location)
+                        }
+                        else {
+                            val location = pig.location
+                            location.y -= speed
+                            pig.teleport(location)
                         }
                     }
                 }
@@ -71,17 +68,16 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        for (player in players) {
-                            if (player.location.z > pig.location.z) {
-                                val location = pig.location
-                                location.z += speed
-                                pig.teleport(location)
-                            }
-                            else {
-                                val location = pig.location
-                                location.z -= speed
-                                pig.teleport(location)
-                            }
+                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
+                        if (player.location.z > pig.location.z) {
+                            val location = pig.location
+                            location.z += speed
+                            pig.teleport(location)
+                        }
+                        else {
+                            val location = pig.location
+                            location.z -= speed
+                            pig.teleport(location)
                         }
                     }
                 }
@@ -90,11 +86,10 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        for (player in players) {
-                            val location = pig.location
-                            location.direction = player.location.subtract(pig.location.toVector()).toVector()
-                            pig.teleport(location)
-                        }
+                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
+                        val location = pig.location
+                        location.direction = player.location.subtract(pig.location.toVector()).toVector()
+                        pig.teleport(location)
                     }
                 }
 
@@ -103,7 +98,7 @@ object PigCommand : CommandExecutor {
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
                         for (player in players) {
-                            if (player.location.distance(pig.location) < 1) {
+                            if (player.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
                                 val tnt = sender.world.spawnEntity(player.location, EntityType.PRIMED_TNT)
                                 (tnt as TNTPrimed).fuseTicks = 0
                             }
@@ -111,7 +106,7 @@ object PigCommand : CommandExecutor {
                     }
                 }
 
-                val plugin = sender.server.pluginManager.getPlugin("pig")
+                val plugin = sender.server.pluginManager.getPlugin("kotlinplugin")
                 if (plugin != null) {
                     Bukkit.getScheduler().runTaskTimer(plugin, x, 0, 0)
                     Bukkit.getScheduler().runTaskTimer(plugin, y, 0, 0)
@@ -124,7 +119,7 @@ object PigCommand : CommandExecutor {
                 }
             }
             else {
-                val plugin = sender.server.pluginManager.getPlugin("pig")
+                val plugin = sender.server.pluginManager.getPlugin("kotlinplugin")
                 if (plugin != null) {
                     Bukkit.getScheduler().cancelTasks(plugin)
                 }
