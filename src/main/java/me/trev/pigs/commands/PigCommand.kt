@@ -12,6 +12,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
+import org.bukkit.entity.TNTPrimed
 
 object PigCommand : CommandExecutor {
     @Suppress("unused")
@@ -21,7 +22,7 @@ object PigCommand : CommandExecutor {
     }
 
     private var enabled = false
-    private val speed = 0.25
+    private const val speed = 0.25
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender is Player) {
@@ -102,9 +103,9 @@ object PigCommand : CommandExecutor {
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
                         for (player in players) {
-                            if (player.location.distance(pig.location) < 2) {
-                                sender.server.say("Explode!!!")
-                                sender.world.spawnEntity(player.location, EntityType.PRIMED_TNT)
+                            if (player.location.distance(pig.location) < 1) {
+                                val tnt = sender.world.spawnEntity(player.location, EntityType.PRIMED_TNT)
+                                (tnt as TNTPrimed).fuseTicks = 0
                             }
                         }
                     }
