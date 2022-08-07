@@ -1,10 +1,10 @@
-name: Pigs
+name: Pig
 version: '${project.version}'
-main: me.trev.pigs.Pigs
+main: me.trev.pigs.Pig
 api-version: 1.19
 authors: [ trev ]
 description: Pig
 commands:
-  test:
-    description: test
+  pig:
+    description: pig
     usage: /<command>
