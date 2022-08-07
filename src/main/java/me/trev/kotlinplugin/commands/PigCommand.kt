@@ -32,16 +32,18 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
-                        if (player.location.x > pig.location.x) {
-                            val location = pig.location
-                            location.x += speed
-                            pig.teleport(location)
-                        }
-                        else {
-                            val location = pig.location
-                            location.x -= speed
-                            pig.teleport(location)
+                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
+                        if (player != null) {
+                            if (player.location.x > pig.location.x) {
+                                val location = pig.location
+                                location.x += speed
+                                pig.teleport(location)
+                            }
+                            else {
+                                val location = pig.location
+                                location.x -= speed
+                                pig.teleport(location)
+                            }
                         }
                     }
                 }
@@ -50,16 +52,18 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
-                        if (player.location.y > pig.location.y) {
-                            val location = pig.location
-                            location.y += speed
-                            pig.teleport(location)
-                        }
-                        else {
-                            val location = pig.location
-                            location.y -= speed
-                            pig.teleport(location)
+                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
+                        if (player != null) {
+                            if (player.location.y > pig.location.y) {
+                                val location = pig.location
+                                location.y += speed
+                                pig.teleport(location)
+                            }
+                            else {
+                                val location = pig.location
+                                location.y -= speed
+                                pig.teleport(location)
+                            }
                         }
                     }
                 }
@@ -68,16 +72,17 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
-                        if (player.location.z > pig.location.z) {
-                            val location = pig.location
-                            location.z += speed
-                            pig.teleport(location)
-                        }
-                        else {
-                            val location = pig.location
-                            location.z -= speed
-                            pig.teleport(location)
+                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
+                        if (player != null) {
+                            if (player.location.z > pig.location.z) {
+                                val location = pig.location
+                                location.z += speed
+                                pig.teleport(location)
+                            } else {
+                                val location = pig.location
+                                location.z -= speed
+                                pig.teleport(location)
+                            }
                         }
                     }
                 }
@@ -86,10 +91,12 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        val player = players.minByOrNull { p -> p.location.distance(pig.location) }!!
-                        val location = pig.location
-                        location.direction = player.location.subtract(pig.location.toVector()).toVector()
-                        pig.teleport(location)
+                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
+                        if (player != null) {
+                            val location = pig.location
+                            location.direction = player.location.subtract(pig.location.toVector()).toVector()
+                            pig.teleport(location)
+                        }
                     }
                 }
 
@@ -97,7 +104,8 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val players = sender.server.onlinePlayers
                     for (pig in pigs) {
-                        for (player in players) {
+                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
+                        if (player != null) {
                             if (player.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
                                 val tnt = sender.world.spawnEntity(player.location, EntityType.PRIMED_TNT)
                                 (tnt as TNTPrimed).fuseTicks = 0
