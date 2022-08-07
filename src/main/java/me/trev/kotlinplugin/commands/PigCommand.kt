@@ -3,6 +3,7 @@
 package me.trev.kotlinplugin.commands
 
 import me.trev.kotlinplugin.KotlinPlugin
+import me.trev.kotlinplugin.commands.TargetEntitySetterCommand.targetEntity
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
@@ -30,11 +31,27 @@ object PigCommand : CommandExecutor {
             if (enabled) {
                 val x = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
-                    val players = sender.server.onlinePlayers
+                    val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
-                        if (player != null) {
-                            if (player.location.x > pig.location.x) {
+                        if (targetEntity == "player") {
+                            val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
+                                .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            if (targetedEntity != null) {
+                                if (targetedEntity.location.x > pig.location.x) {
+                                    val location = pig.location
+                                    location.x += speed
+                                    pig.teleport(location)
+                                }
+                                else {
+                                    val location = pig.location
+                                    location.x -= speed
+                                    pig.teleport(location)
+                                }
+                            }
+                        }
+                        else {
+                            val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
+                            if (targetedEntity.location.x > pig.location.x) {
                                 val location = pig.location
                                 location.x += speed
                                 pig.teleport(location)
@@ -50,11 +67,27 @@ object PigCommand : CommandExecutor {
 
                 val y = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
-                    val players = sender.server.onlinePlayers
+                    val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
-                        if (player != null) {
-                            if (player.location.y > pig.location.y) {
+                        if (targetEntity == "player") {
+                            val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
+                                .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            if (targetedEntity != null) {
+                                if (targetedEntity.location.y > pig.location.y) {
+                                    val location = pig.location
+                                    location.y += speed
+                                    pig.teleport(location)
+                                }
+                                else {
+                                    val location = pig.location
+                                    location.y -= speed
+                                    pig.teleport(location)
+                                }
+                            }
+                        }
+                        else {
+                            val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
+                            if (targetedEntity.location.y > pig.location.y) {
                                 val location = pig.location
                                 location.y += speed
                                 pig.teleport(location)
@@ -70,15 +103,32 @@ object PigCommand : CommandExecutor {
 
                 val z = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
-                    val players = sender.server.onlinePlayers
+                    val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
-                        if (player != null) {
-                            if (player.location.z > pig.location.z) {
+                        if (targetEntity == "player") {
+                            val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
+                                .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            if (targetedEntity != null) {
+                                if (targetedEntity.location.z > pig.location.z) {
+                                    val location = pig.location
+                                    location.z += speed
+                                    pig.teleport(location)
+                                }
+                                else {
+                                    val location = pig.location
+                                    location.z -= speed
+                                    pig.teleport(location)
+                                }
+                            }
+                        }
+                        else {
+                            val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
+                            if (targetedEntity.location.z > pig.location.z) {
                                 val location = pig.location
                                 location.z += speed
                                 pig.teleport(location)
-                            } else {
+                            }
+                            else {
                                 val location = pig.location
                                 location.z -= speed
                                 pig.teleport(location)
@@ -89,12 +139,21 @@ object PigCommand : CommandExecutor {
 
                 val rotation = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
-                    val players = sender.server.onlinePlayers
+                    val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
-                        if (player != null) {
+                        if (targetEntity == "player") {
+                            val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
+                                .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            if (targetedEntity != null) {
+                                val location = pig.location
+                                location.direction = targetedEntity.location.subtract(pig.location.toVector()).toVector()
+                                pig.teleport(location)
+                            }
+                        }
+                        else {
+                            val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
                             val location = pig.location
-                            location.direction = player.location.subtract(pig.location.toVector()).toVector()
+                            location.direction = targetedEntity.location.subtract(pig.location.toVector()).toVector()
                             pig.teleport(location)
                         }
                     }
@@ -102,12 +161,22 @@ object PigCommand : CommandExecutor {
 
                 val explosion = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
-                    val players = sender.server.onlinePlayers
+                    val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        val player = players.sortedBy { p -> p.location.distance(pig.location) }.firstOrNull { p -> p.gameMode.name.lowercase() == "survival" }
-                        if (player != null) {
-                            if (player.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
-                                val tnt = sender.world.spawnEntity(player.location, EntityType.PRIMED_TNT)
+                        if (targetEntity == "player") {
+                            val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
+                                .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            if (targetedEntity != null) {
+                                if (targetedEntity.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
+                                    val tnt = sender.world.spawnEntity(targetedEntity.location, EntityType.PRIMED_TNT)
+                                    (tnt as TNTPrimed).fuseTicks = 0
+                                }
+                            }
+                        }
+                        else {
+                            val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
+                            if (targetedEntity.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
+                                val tnt = sender.world.spawnEntity(targetedEntity.location, EntityType.PRIMED_TNT)
                                 (tnt as TNTPrimed).fuseTicks = 0
                             }
                         }
