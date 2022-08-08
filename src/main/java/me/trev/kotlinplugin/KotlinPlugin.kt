@@ -2,9 +2,9 @@
 
 package me.trev.kotlinplugin
 
+import me.trev.kotlinplugin.commands.ManageSpeedCommand
+import me.trev.kotlinplugin.commands.ManageTargetEntityCommand
 import me.trev.kotlinplugin.commands.PigCommand
-import me.trev.kotlinplugin.commands.TargetEntityGetterCommand
-import me.trev.kotlinplugin.commands.TargetEntitySetterCommand
 import me.trev.kotlinplugin.listeners.EntityListener
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -21,8 +21,8 @@ class KotlinPlugin : JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(EntityListener, this)
         logger.info("registar the commands...")
         getCommand("pig")?.setExecutor(PigCommand)
-        getCommand("settarget")?.setExecutor(TargetEntitySetterCommand)
-        getCommand("gettarget")?.setExecutor(TargetEntityGetterCommand)
+        getCommand("target")?.setExecutor(ManageTargetEntityCommand)
+        getCommand("speed")?.setExecutor(ManageSpeedCommand)
         instance = this
         logger.info("finishd")
     }

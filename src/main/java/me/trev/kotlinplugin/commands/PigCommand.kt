@@ -3,7 +3,7 @@
 package me.trev.kotlinplugin.commands
 
 import me.trev.kotlinplugin.KotlinPlugin
-import me.trev.kotlinplugin.commands.TargetEntitySetterCommand.targetEntity
+import me.trev.kotlinplugin.commands.ManageTargetEntityCommand.targetEntity
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
@@ -22,7 +22,7 @@ object PigCommand : CommandExecutor {
     }
 
     private var enabled = false
-    private const val speed = 0.25
+    var speed = 0.17
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender is Player) {

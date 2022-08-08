@@ -8,9 +8,9 @@ commands:
   pig:
     description: makes pigs go towards players and explode when they are near
     usage: /<command>
-  settarget:
-    description: set what entity pigs targets
-    usage: /<command> entity
-  gettarget:
-    description: get what entity pigs targets
-    usage: /<command>
+  target:
+    description: set/get what entity pigs targets
+    usage: /<command> [get|set]
+  speed:
+    description: set/get the speed of pig
+    usage: /<command> [get|set]
