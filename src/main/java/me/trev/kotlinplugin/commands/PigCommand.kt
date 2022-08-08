@@ -32,6 +32,9 @@ object PigCommand : CommandExecutor {
                 val x = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
+                    if (targetedEntities.isEmpty()) {
+                        return@Runnable
+                    }
                     for (pig in pigs) {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
@@ -68,6 +71,9 @@ object PigCommand : CommandExecutor {
                 val y = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
+                    if (targetedEntities.isEmpty()) {
+                        return@Runnable
+                    }
                     for (pig in pigs) {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
@@ -104,6 +110,9 @@ object PigCommand : CommandExecutor {
                 val z = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
+                    if (targetedEntities.isEmpty()) {
+                        return@Runnable
+                    }
                     for (pig in pigs) {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
@@ -140,6 +149,9 @@ object PigCommand : CommandExecutor {
                 val rotation = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
+                    if (targetedEntities.isEmpty()) {
+                        return@Runnable
+                    }
                     for (pig in pigs) {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
@@ -162,6 +174,9 @@ object PigCommand : CommandExecutor {
                 val explosion = Runnable {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
+                    if (targetedEntities.isEmpty()) {
+                        return@Runnable
+                    }
                     for (pig in pigs) {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
