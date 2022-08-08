@@ -167,7 +167,7 @@ object PigCommand : CommandExecutor {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
                             if (targetedEntity != null) {
-                                if (targetedEntity.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
+                                if (targetedEntity.location.distance(pig.location) < 1) {
                                     val tnt = sender.world.spawnEntity(targetedEntity.location, EntityType.PRIMED_TNT)
                                     (tnt as TNTPrimed).fuseTicks = 0
                                 }
@@ -175,7 +175,7 @@ object PigCommand : CommandExecutor {
                         }
                         else {
                             val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
-                            if (targetedEntity.location.distance(pig.location) < 1 && pig.passengers.isEmpty()) {
+                            if (targetedEntity.location.distance(pig.location) < 1) {
                                 val tnt = sender.world.spawnEntity(targetedEntity.location, EntityType.PRIMED_TNT)
                                 (tnt as TNTPrimed).fuseTicks = 0
                             }
