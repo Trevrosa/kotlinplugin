@@ -33,7 +33,7 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        if (targetEntity.contains("player")) {
+                        if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
                             if (targetedEntity != null) {
@@ -69,7 +69,7 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        if (targetEntity.contains("player")) {
+                        if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
                             if (targetedEntity != null) {
@@ -105,7 +105,7 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        if (targetEntity.contains("player")) {
+                        if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
                             if (targetedEntity != null) {
@@ -141,7 +141,7 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        if (targetEntity.contains("player")) {
+                        if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
                             if (targetedEntity != null) {
@@ -163,7 +163,7 @@ object PigCommand : CommandExecutor {
                     val pigs = sender.server.selectEntities(sender, "@e[type=pig]")
                     val targetedEntities = sender.server.selectEntities(sender, "@e[type=$targetEntity]")
                     for (pig in pigs) {
-                        if (targetEntity.contains("player")) {
+                        if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
                             if (targetedEntity != null) {
