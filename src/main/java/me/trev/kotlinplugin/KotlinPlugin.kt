@@ -6,6 +6,7 @@ import me.trev.kotlinplugin.commands.ManageSpeedCommand
 import me.trev.kotlinplugin.commands.ManageTargetEntityCommand
 import me.trev.kotlinplugin.commands.PigCommand
 import me.trev.kotlinplugin.listeners.EntityListener
+import me.trev.kotlinplugin.listeners.InventoryDragListener
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -19,6 +20,7 @@ class KotlinPlugin : JavaPlugin() {
     override fun onEnable() {
         logger.info("registar the listeners...")
         Bukkit.getPluginManager().registerEvents(EntityListener, this)
+        Bukkit.getPluginManager().registerEvents(InventoryDragListener, this)
         logger.info("registar the commands...")
         getCommand("pig")?.setExecutor(PigCommand)
         getCommand("target")?.setExecutor(ManageTargetEntityCommand)

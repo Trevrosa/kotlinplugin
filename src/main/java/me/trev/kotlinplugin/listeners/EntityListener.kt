@@ -15,9 +15,8 @@ object EntityListener : Listener {
         this.sendMessage(component)
     }
 
-    @Suppress("RedundantVisibilityModifier")
     @EventHandler
-    public fun onBreed(event: EntityBreedEvent) {
+    fun onBreed(event: EntityBreedEvent) {
         val tnt = event.entity.world.spawnEntity(event.entity.location, EntityType.PRIMED_TNT)
         (tnt as TNTPrimed).fuseTicks = 0
         event.entity.server.say("Christian minecraft server...")
