@@ -7,6 +7,7 @@ import me.trev.kotlinplugin.commands.ManageTargetEntityCommand.targetEntity
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Server
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -39,42 +40,38 @@ object PigCommand : CommandExecutor {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            val finalLocation: Location = pig.location
+
                             if (targetedEntity != null) {
-                                if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
-                                    val location = pig.location
-                                    location.y += speed * 2
-                                    pig.teleport(location)
-                                    return@Runnable
+                                if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y > pig.location.y) {
+                                    finalLocation.y += speed
                                 }
+
                                 if (targetedEntity.location.x > pig.location.x) {
-                                    val location = pig.location
-                                    location.x += speed
-                                    pig.teleport(location)
+                                    finalLocation.x += speed
+                                    pig.teleport(finalLocation)
                                 }
                                 else {
-                                    val location = pig.location
-                                    location.x -= speed
-                                    pig.teleport(location)
+                                    finalLocation.x -= speed
+                                    pig.teleport(finalLocation)
                                 }
                             }
                         }
                         else {
                             val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
-                            if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
-                                val location = pig.location
-                                location.y += speed * 2
-                                pig.teleport(location)
-                                return@Runnable
+                            val finalLocation: Location = pig.location
+
+                            if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y > pig.location.y) {
+                                finalLocation.y += speed
                             }
+
                             if (targetedEntity.location.x > pig.location.x) {
-                                val location = pig.location
-                                location.x += speed
-                                pig.teleport(location)
+                                finalLocation.x += speed
+                                pig.teleport(finalLocation)
                             }
                             else {
-                                val location = pig.location
-                                location.x -= speed
-                                pig.teleport(location)
+                                finalLocation.x -= speed
+                                pig.teleport(finalLocation)
                             }
                         }
                     }
@@ -129,37 +126,38 @@ object PigCommand : CommandExecutor {
                         if (targetEntity == "player") {
                             val targetedEntity = targetedEntities.sortedBy { p -> p.location.distance(pig.location) }
                                 .firstOrNull { p -> (p as Player).gameMode.name.lowercase() == "survival" }
+                            val finalLocation: Location = pig.location
+
                             if (targetedEntity != null) {
-                                if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
-                                    val location = pig.location
-                                    location.y += speed * 2
-                                    pig.teleport(location)
-                                    return@Runnable
+                                if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y > pig.location.y) {
+                                    finalLocation.y += speed
                                 }
+
                                 if (targetedEntity.location.z > pig.location.z) {
-                                    val location = pig.location
-                                    location.z += speed
-                                    pig.teleport(location)
+                                    finalLocation.z += speed
+                                    pig.teleport(finalLocation)
                                 }
                                 else {
-                                    val location = pig.location
-                                    location.z -= speed
-                                    pig.teleport(location)
+                                    finalLocation.z -= speed
+                                    pig.teleport(finalLocation)
                                 }
                             }
                         }
                         else {
                             val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
-                            if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
-                                val location = pig.location
-                                location.y += speed * 2
-                                pig.teleport(location)
-                                return@Runnable
+                            val finalLocation: Location = pig.location
+
+                            if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y > pig.location.y) {
+                                finalLocation.y += speed
+                            }
+
+                            if (targetedEntity.location.z > pig.location.z) {
+                                finalLocation.z += speed
+                                pig.teleport(finalLocation)
                             }
                             else {
-                                val location = pig.location
-                                location.z -= speed
-                                pig.teleport(location)
+                                finalLocation.z -= speed
+                                pig.teleport(finalLocation)
                             }
                         }
                     }

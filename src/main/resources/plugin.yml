@@ -14,3 +14,9 @@ commands:
   speed:
     description: set/get the speed of pig
     usage: /<command> [get|set]
+  equip:
+    description: equip an item onto any armor slot
+    usage: /<commamd> [helmet|chestplate|leggings|boots]
+  mergeenchant:
+    description: merge two item's enchantments into one
+    usage: /<command> [1-9]
