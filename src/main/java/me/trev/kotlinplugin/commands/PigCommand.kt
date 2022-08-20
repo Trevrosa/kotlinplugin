@@ -42,7 +42,7 @@ object PigCommand : CommandExecutor {
                             if (targetedEntity != null) {
                                 if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
                                     val location = pig.location
-                                    location.y += speed
+                                    location.y += speed * 2
                                     pig.teleport(location)
                                     return@Runnable
                                 }
@@ -62,7 +62,7 @@ object PigCommand : CommandExecutor {
                             val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
                             if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
                                 val location = pig.location
-                                location.y += speed
+                                location.y += speed * 2
                                 pig.teleport(location)
                                 return@Runnable
                             }
@@ -105,12 +105,6 @@ object PigCommand : CommandExecutor {
                         }
                         else {
                             val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
-                            if (!targetedEntity.world.getBlockAt(targetedEntity.location).type.isAir) {
-                                val location = pig.location
-                                location.y += speed
-                                pig.teleport(location)
-                                return@Runnable
-                            }
                             if (targetedEntity.location.y > pig.location.y) {
                                 val location = pig.location
                                 location.y += speed
@@ -138,7 +132,7 @@ object PigCommand : CommandExecutor {
                             if (targetedEntity != null) {
                                 if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
                                     val location = pig.location
-                                    location.y += speed
+                                    location.y += speed * 2
                                     pig.teleport(location)
                                     return@Runnable
                                 }
@@ -158,7 +152,7 @@ object PigCommand : CommandExecutor {
                             val targetedEntity = targetedEntities.minByOrNull { p -> p.location.distance(pig.location) }!!
                             if (!pig.world.getBlockAt(pig.location).type.isAir && targetedEntity.location.y >= pig.location.y) {
                                 val location = pig.location
-                                location.y += speed
+                                location.y += speed * 2
                                 pig.teleport(location)
                                 return@Runnable
                             }
