@@ -4,7 +4,6 @@ package me.trev.kotlinplugin.commands
 
 import me.trev.kotlinplugin.KotlinPlugin
 import me.trev.kotlinplugin.commands.ManageTargetEntityCommand.targetEntity
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -17,6 +16,7 @@ object PigCommand : CommandExecutor {
 
     private var enabled = false
     var speed = 0.17
+    private var taskIds: MutableList<Int> = mutableListOf()
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender is Player) {
@@ -217,24 +217,21 @@ object PigCommand : CommandExecutor {
                     }
                 }
 
-                val plugin = sender.server.pluginManager.getPlugin("kotlinplugin")
-                if (plugin != null) {
-                    Bukkit.getScheduler().runTaskTimer(plugin, x, 0, 0)
-                    Bukkit.getScheduler().runTaskTimer(plugin, y, 0, 0)
-                    Bukkit.getScheduler().runTaskTimer(plugin, z, 0, 0)
-                    Bukkit.getScheduler().runTaskTimer(plugin, rotation, 0, 0)
-                    Bukkit.getScheduler().runTaskTimer(plugin, explosion, 0, 0)
-                    Bukkit.getScheduler().runTaskTimer(plugin, glow, 0, 0)
-                    KotlinPlugin.instance?.logger?.info("scheduled the pigs")
+                val pluginInstance = KotlinPlugin.instance!!
 
-                    sender.sendMessage("enabled")
-                }
+                taskIds.add(pluginInstance.runTaskTimer(x, 0, 0).taskId)
+                taskIds.add(pluginInstance.runTaskTimer(y, 0, 0).taskId)
+                taskIds.add(pluginInstance.runTaskTimer(z, 0, 0).taskId)
+                taskIds.add(pluginInstance.runTaskTimer(rotation, 0, 0).taskId)
+                taskIds.add(pluginInstance.runTaskTimer(explosion, 0, 0).taskId)
+                taskIds.add(pluginInstance.runTaskTimer(glow, 0, 0).taskId)
+
+                pluginInstance.logger.info("scheduled the pigs")
+                sender.sendMessage("enabled")
             }
             else {
-                val plugin = sender.server.pluginManager.getPlugin("kotlinplugin")
-                if (plugin != null) {
-                    Bukkit.getScheduler().cancelTasks(plugin)
-                }
+                KotlinPlugin.instance!!.cancelTasks(taskIds)
+                taskIds.clear()
 
                 sender.sendMessage("disabled")
             }

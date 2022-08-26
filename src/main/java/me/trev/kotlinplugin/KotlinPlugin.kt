@@ -8,6 +8,7 @@ import me.trev.kotlinplugin.listeners.InventoryDragListener
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitTask
 
 class KotlinPlugin : JavaPlugin() {
     companion object {
@@ -29,6 +30,42 @@ class KotlinPlugin : JavaPlugin() {
 
     fun registerEvent(event: Listener) {
         Bukkit.getPluginManager().registerEvents(event, this)
+    }
+
+    fun runTask(runnable: Runnable): BukkitTask {
+        return Bukkit.getScheduler().runTask(this, runnable)
+    }
+
+    fun runTaskAsync(runnable: Runnable): BukkitTask {
+        return Bukkit.getScheduler().runTaskAsynchronously(this, runnable)
+    }
+
+    fun runTaskTimer(runnable: Runnable, delay: Long, period: Long): BukkitTask {
+        return Bukkit.getScheduler().runTaskTimer(this, runnable, delay, period)
+    }
+
+    @Suppress("unused")
+    fun cancelTask(taskId: Int?) {
+        if (taskId == null) {
+            return
+        }
+
+        Bukkit.getScheduler().cancelTask(taskId)
+    }
+
+    fun cancelTasks(taskIds: List<Int>?) {
+        if (taskIds.isNullOrEmpty()) {
+            return
+        }
+
+        for (id in taskIds) {
+            Bukkit.getScheduler().cancelTask(id)
+        }
+    }
+
+    @Suppress("unused")
+    fun cancelAllTasks() {
+        Bukkit.getScheduler().cancelTasks(this)
     }
 
     override fun onEnable() {

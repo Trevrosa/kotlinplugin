@@ -7,16 +7,15 @@ import org.bukkit.entity.TNTPrimed
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityExplodeEvent
-import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
 
 object TntMultiplier : Listener {
 
-    private fun Vector.stringify(): String {
-        return "${this.x}, ${this.y}, ${this.z}"
-    }
+//    private fun Vector.stringify(): String {
+//        return "${this.x}, ${this.y}, ${this.z}"
+//    }
 
     @EventHandler
     fun onTntExplode(event: EntityExplodeEvent) {
@@ -27,38 +26,39 @@ object TntMultiplier : Listener {
             return
         }
 
-        val locations: MutableList<Location> = mutableListOf()
+        val locations: MutableList<List<Double>> = mutableListOf()
 
-        var i = 0.0
-        while (i < 360) {
-            i += 2
-            val angle = i * Math.PI / 180
-            val x = (event.location.x + 5 * cos(angle))
-            val y = event.location.y
-            val z = (event.location.z + 5 * sin(angle))
+        val entityX = event.location.x
+        val entityY = event.location.y
+        val entityZ = event.location.z
 
-            val loc = Location(event.entity.world, x, y, z)
+        KotlinPlugin.instance!!.runTaskAsync {
+            var i = 0.0
+            while (i < 360) {
+                i += 2
+                val angle = i * Math.PI / 180
 
-            locations.add(loc)
+                val x = entityX + 3 * cos(angle)
+                val z = entityZ + 3 * sin(angle)
+
+                val loc: List<Double> = listOf(x, entityY, z)
+
+                locations.add(loc)
+            }
+
+            KotlinPlugin.instance!!.runTask {
+                for (loc in locations) {
+                    val location = Location(event.entity.world, loc[0], loc[1], loc[2])
+
+                    val tnt = event.entity.world.spawnEntity(event.location, EntityType.PRIMED_TNT)
+                    if (tnt !is TNTPrimed) return@runTask
+
+                    val vector = (location.toVector().subtract(tnt.location.toVector())).multiply(0.175)
+                    vector.y += 1
+
+                    tnt.velocity = vector
+                }
+            }
         }
-
-        for ((it, loc) in locations.withIndex()) {
-            val tnt = event.entity.world.spawnEntity(event.location, EntityType.PRIMED_TNT)
-            if (tnt !is TNTPrimed) return
-
-            val oldFuse = tnt.fuseTicks
-            tnt.fuseTicks *= 10
-
-            val vector = (loc.toVector().subtract(tnt.location.toVector())).multiply(0.175)
-
-            vector.y += 1
-
-            KotlinPlugin.instance?.logger?.info("tnt #$it added ${vector.stringify()}")
-
-            tnt.velocity = vector
-            tnt.fuseTicks = oldFuse / 2
-        }
-
-        // event.location.createExplosion(5F)
     }
 }
