@@ -4,11 +4,8 @@ package me.trev.kotlinplugin.commands
 
 import me.trev.kotlinplugin.KotlinPlugin
 import me.trev.kotlinplugin.commands.ManageTargetEntityCommand.targetEntity
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.Server
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -17,10 +14,6 @@ import org.bukkit.entity.Player
 import org.bukkit.entity.TNTPrimed
 
 object PigCommand : CommandExecutor {
-    private fun Server.say(text: String, color: TextColor = TextColor.color(255, 255, 255)) {
-        val component = Component.text(text).color(color)
-        this.sendMessage(component)
-    }
 
     private var enabled = false
     var speed = 0.17
@@ -234,7 +227,7 @@ object PigCommand : CommandExecutor {
                     Bukkit.getScheduler().runTaskTimer(plugin, glow, 0, 0)
                     KotlinPlugin.instance?.logger?.info("scheduled the pigs")
 
-                    sender.server.say("enabled")
+                    sender.sendMessage("enabled")
                 }
             }
             else {
@@ -243,11 +236,11 @@ object PigCommand : CommandExecutor {
                     Bukkit.getScheduler().cancelTasks(plugin)
                 }
 
-                sender.server.say("disabled")
+                sender.sendMessage("disabled")
             }
         }
         else {
-            sender.server.say("only players can use this command")
+            sender.sendMessage("only players can use this command")
         }
 
         return true

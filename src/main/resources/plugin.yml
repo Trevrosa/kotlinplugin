@@ -20,3 +20,9 @@ commands:
   mergeenchant:
     description: merge two item's enchantments into one
     usage: /<command> [1-9]
+  entitycount:
+    description: count entity
+    usage: /<command> entity
+  tntmultiply:
+    description: enable it
+    usage: /<command>

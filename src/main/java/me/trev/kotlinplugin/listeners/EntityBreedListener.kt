@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityBreedEvent
 
-object EntityListener : Listener {
+object EntityBreedListener : Listener {
     private fun Server.say(text: String, color: TextColor = TextColor.color(255, 255, 255)) {
         val component = Component.text(text).color(color)
         this.sendMessage(component)
