@@ -5,7 +5,9 @@ package me.trev.kotlinplugin
 import me.trev.kotlinplugin.commands.*
 import me.trev.kotlinplugin.listeners.EntityBreedListener
 import me.trev.kotlinplugin.listeners.InventoryDragListener
+import me.trev.kotlinplugin.listeners.TntMultiplier
 import org.bukkit.Bukkit
+import org.bukkit.command.CommandExecutor
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
@@ -68,21 +70,26 @@ class KotlinPlugin : JavaPlugin() {
         Bukkit.getScheduler().cancelTasks(this)
     }
 
+    private fun setCommandExecutor(name: String, executor: CommandExecutor) {
+        getCommand(name)?.setExecutor(executor)
+    }
+
     override fun onEnable() {
         instance = this
 
         logger.info("registar the listeners...")
-        Bukkit.getPluginManager().registerEvents(EntityBreedListener, this)
-        Bukkit.getPluginManager().registerEvents(InventoryDragListener, this)
+        this.registerEvent(EntityBreedListener)
+        this.registerEvent(InventoryDragListener)
+        this.registerEvent(TntMultiplier)
 
         logger.info("registar the commands...")
-        getCommand("pig")?.setExecutor(PigCommand)
-        getCommand("target")?.setExecutor(ManageTargetEntityCommand)
-        getCommand("speed")?.setExecutor(ManageSpeedCommand)
-        getCommand("equip")?.setExecutor(EquipItemCommand)
-        getCommand("mergeenchant")?.setExecutor(MergeEnchantsCommand)
-        getCommand("entitycount")?.setExecutor(EntityCountCommand)
-        getCommand("tntmultiply")?.setExecutor(TntMultiplyCommand)
+        this.setCommandExecutor("pig", PigCommand)
+        this.setCommandExecutor("target", ManageTargetEntityCommand)
+        this.setCommandExecutor("speed", ManageSpeedCommand)
+        this.setCommandExecutor("equip", EquipItemCommand)
+        this.setCommandExecutor("mergeenchant", MergeEnchantsCommand)
+        this.setCommandExecutor("entitycount", EntityCountCommand)
+        this.setCommandExecutor("tntmultiply", TntMultiplyCommand)
 
         logger.info("finishd")
     }

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.HandlerList
 
 object TntMultiplyCommand : CommandExecutor {
-    private var enabled = false
+    private var enabled = true
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender is Player) {

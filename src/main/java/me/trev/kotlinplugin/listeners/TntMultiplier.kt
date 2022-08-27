@@ -12,7 +12,6 @@ import kotlin.math.sin
 
 
 object TntMultiplier : Listener {
-
 //    private fun Vector.stringify(): String {
 //        return "${this.x}, ${this.y}, ${this.z}"
 //    }
@@ -35,7 +34,7 @@ object TntMultiplier : Listener {
         KotlinPlugin.instance!!.runTaskAsync {
             var i = 0.0
             while (i < 360) {
-                i += 2
+                i += 4
                 val angle = i * Math.PI / 180
 
                 val x = entityX + 3 * cos(angle)
